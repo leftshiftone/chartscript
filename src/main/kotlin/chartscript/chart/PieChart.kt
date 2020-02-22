@@ -1,5 +1,6 @@
 package chartscript.chart
 
+import chartscript.ChartScript
 import chartscript.api.IFontProvider
 import chartscript.api.extension.toColor
 import org.jfree.chart.ChartFactory
@@ -14,6 +15,7 @@ import java.awt.Color
 import java.awt.Rectangle
 import java.awt.geom.Ellipse2D
 import java.text.DecimalFormat
+import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class PieChart(private val styler: PieChart.PieStyle.() -> Unit = {},
@@ -67,8 +69,11 @@ class PieChart(private val styler: PieChart.PieStyle.() -> Unit = {},
             labelPaint("white")
             simpleLabels(true)
             labelFormat("{2}")
-            labelFont("AuroraSans", 24)
-            legendFont("AuroraSans", 24)
+            val defaultFont = Optional.ofNullable(ChartScript.settings.getProperty("defaultFont"))
+            defaultFont.ifPresent {
+                legendFont(it, 24)
+                labelFont(it, 24)
+            }
         }
 
         fun title(title: String) = add { x, _, _ -> x.setTitle(title) }

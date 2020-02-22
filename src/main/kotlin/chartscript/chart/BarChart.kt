@@ -1,5 +1,6 @@
 package chartscript.chart
 
+import chartscript.ChartScript
 import chartscript.api.IFontProvider
 import chartscript.api.extension.toColor
 import org.jfree.chart.ChartFactory
@@ -14,6 +15,7 @@ import org.jfree.chart.ui.RectangleEdge
 import org.jfree.data.general.DatasetUtils
 import java.awt.BasicStroke
 import java.awt.Color
+import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class BarChart(private val xLabel: String,
@@ -56,8 +58,12 @@ class BarChart(private val xLabel: String,
             borderStroke(0)
             isBorderVisible(false)
             legendPosition("right")
-            legendFont("AuroraSans", 24)
-            labelFont("AuroraSans", 16)
+
+            val defaultFont = Optional.ofNullable(ChartScript.settings.getProperty("defaultFont"))
+            defaultFont.ifPresent {
+                legendFont(it, 24)
+                labelFont(it, 16)
+            }
         }
 
         fun title(title: String) = add { x, _, _ -> x.setTitle(title) }
