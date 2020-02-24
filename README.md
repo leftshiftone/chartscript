@@ -1,3 +1,7 @@
+[![CircleCI branch](https://img.shields.io/circleci/project/github/leftshiftone/chartscript/master.svg?style=flat-square)](https://circleci.com/gh/leftshiftone/chartscript)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/leftshiftone/chartscript.svg?style=flat-square)](https://github.com/leftshiftone/chartscript/tags)
+[![Bintray](https://img.shields.io/badge/dynamic/json.svg?label=bintray&query=name&style=flat-square&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fleftshiftone%2Fchartscript%2Fone.leftshift.chartscript.chartscript%2Fversions%2F_latest)](https://bintray.com/leftshiftone/chartscript/one.leftshift.chartscript.chartscript/_latestVersion)
+
 # ChartScript
 
 ChartScript is an open source software library for script based chart generation. 
