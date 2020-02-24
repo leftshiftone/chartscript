@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.Test
-
 buildscript {
     ext {
         versionKotlin = "1.3.41"
@@ -39,8 +37,9 @@ dependencies {
     compile "org.apache.xmlgraphics:batik-codec:1.11"
 
     testCompile "org.junit.jupiter:junit-jupiter:5.4.2"
-    testRuntime "org.slf4j:slf4j-simple:1.7.26"
+    testCompile "org.assertj:assertj-core:3.11.1"
     testCompile 'org.xmlunit:xmlunit-core:2.6.3'
+    testRuntime "org.slf4j:slf4j-simple:1.7.26"
 }
 
 compileKotlin {
@@ -56,9 +55,9 @@ compileTestKotlin {
     }
 }
 
-// release {
-//     defaultVersionStrategy = nebula.plugin.release.NetflixOssStrategies.SNAPSHOT
-// }
+ release {
+     defaultVersionStrategy = nebula.plugin.release.NetflixOssStrategies.SNAPSHOT
+ }
 
 test {
     useJUnitPlatform()
@@ -90,8 +89,8 @@ publishing {
             artifact javadocJar
             pom.withXml {
                 Node root = asNode()
-                root.appendNode("name", "chartscript")
-                root.appendNode("description", "chartscript is an open source software library for script based PDF generation using a rendering evaluation graph.")
+                root.appendNode("name", "ChartScript")
+                root.appendNode("description", "ChartScript is an open source software library for script based PDF generation using a rendering evaluation graph.")
                 root.appendNode("url", "https://github.com/leftshiftone/chartscript")
 
                 Node licenses = root.appendNode("licenses")

@@ -1,6 +1,6 @@
 package chartscript
 
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.xmlunit.builder.DiffBuilder
 import org.xmlunit.builder.Input
@@ -22,7 +22,10 @@ class BarChartTest {
                 .ignoreComments()
                 .ignoreWhitespace()
                 .build()
-        Assertions.assertFalse(diff.hasDifferences())
+
+        assertThat(diff.hasDifferences())
+                .withFailMessage(diff.differences.joinToString { "\n${it}" })
+                .isFalse()
     }
 
 }
