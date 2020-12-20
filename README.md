@@ -123,10 +123,10 @@ The **style callback** accepts the following properties:
 Releases are triggered locally. Just a tag will be pushed and CI pipelines take care of the rest.
 
 #### Major
-Run `./gradlew final -x bintrayUpload -Prelease.scope=major` locally.
+Run `./gradlew final -x bintrayUpload -x sendReleaseEmail -Prelease.scope=major` locally.
 
 #### Minor
-Run `./gradlew final -x bintrayUpload -Prelease.scope=minor` locally.
+Run `./gradlew final -x bintrayUpload -x sendReleaseEmail -Prelease.scope=minor` locally.
 
 #### Patch
-Run `./gradlew final -x bintrayUpload -Prelease.scope=patch` locally.
+Run `./gradlew final -x bintrayUpload -x sendReleaseEmail -Prelease.scope=patch` locally.
