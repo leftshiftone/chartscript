@@ -30,6 +30,7 @@ jobs:
           <<: *webhook-created
       - checkout
       - run: chmod a+x gradlew
+      - run: echo $OSSRH_SIGN_KEY_CONTENT | base64 --decode > "$OSSRH_SIGN_KEY_PATH"
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew dependencies
@@ -58,9 +59,10 @@ jobs:
       - run:
           <<: *webhook-created
       - checkout
+      - run: echo $OSSRH_SIGN_KEY_CONTENT | base64 --decode > "$OSSRH_SIGN_KEY_PATH"
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
-      - run: ./gradlew final bintrayUpload -Prelease.useLastTag=true --stacktrace
+      - run: ./gradlew final publishReleasePublicationToSonatypeRepository -Prelease.useLastTag=true --max-workers 1 closeAndReleaseRepository --stacktrace
       - save_cache:
           paths:
             - ~/.gradle
@@ -92,12 +94,16 @@ workflows:
   build:
     jobs:
       - build:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             tags:
               ignore: /.*/
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             tags:
               ignore: /.*/
@@ -106,14 +112,18 @@ workflows:
   release:
     jobs:
       - release:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             branches:
               ignore: /.*/
@@ -131,8 +141,12 @@ workflows:
                 - master
     jobs:
       - code-analytics:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           requires:
             - code-analytics

@@ -18,3 +18,7 @@
 # Python
 **/.venv
 **/venv
+
+# sdkman
+.sdkmanrc
+
