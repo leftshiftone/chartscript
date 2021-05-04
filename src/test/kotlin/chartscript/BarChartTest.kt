@@ -17,16 +17,18 @@ class BarChartTest {
         }
 
         val source1 = Input.fromByteArray(bytes).build()
-        val source2 = Input.fromStream(BarChartTest::class.java.getResourceAsStream("/barchart-${if (WINDOWS.isCurrentOs) "win" else "unix"}.svg")).build()
-
-        val diff = DiffBuilder.compare(source1).withTest(source2)
-                .ignoreComments()
-                .ignoreWhitespace()
+        val source2 =
+            Input.fromStream(BarChartTest::class.java.getResourceAsStream("/barchart-${if (WINDOWS.isCurrentOs) "win" else "unix"}.svg"))
                 .build()
 
+        val diff = DiffBuilder.compare(source1).withTest(source2)
+            .ignoreComments()
+            .ignoreWhitespace()
+            .build()
+
         assertThat(diff.hasDifferences())
-                .withFailMessage(diff.differences.joinToString { "\n${it}" })
-                .isFalse()
+            .withFailMessage(diff.differences.joinToString { "\n${it}" })
+            .isFalse()
     }
 
 }
