@@ -6,13 +6,11 @@ import org.junit.jupiter.api.condition.OS.WINDOWS
 import org.xmlunit.builder.DiffBuilder
 import org.xmlunit.builder.Input
 import java.nio.file.Files
-import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.writeBytes
 
 class BarChartTest {
 
     @Test
-    @OptIn(ExperimentalPathApi::class)
     fun `render bar chart`() {
         val bytes = ChartScript.barchart("ABC", "XYZ", {}) {
             value(10, 15, 20)
@@ -21,7 +19,7 @@ class BarChartTest {
         }
 
         val actualSvgFile = Files.createTempFile(this::class.java.simpleName, ".svg")
-        actualSvgFile.writeBytes(bytes)
+        Files.write(actualSvgFile.toAbsolutePath(), bytes)
         val source1 = Input.fromByteArray(bytes).build()
         val source2 = Input.fromStream(BarChartTest::class.java.getResourceAsStream("/barchart-${if (WINDOWS.isCurrentOs) "win" else "unix"}.svg")).build()
 
